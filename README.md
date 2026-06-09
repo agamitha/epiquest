@@ -1,2 +1,2 @@
 # epiquest
-Learning game built for academic research
+Learning game built by agamitha.ai for academic research
