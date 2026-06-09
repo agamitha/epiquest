@@ -49,50 +49,53 @@ class _WitchHunterMod2WidgetState extends State<WitchHunterMod2Widget> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        body: Stack(
-          children: [
-            AuthUserStreamWidget(
-              builder: (context) => Container(
-                width: double.infinity,
-                height: double.infinity,
-                child: custom_widgets.WitchHunter(
+        body: SafeArea(
+          top: true,
+          child: Stack(
+            children: [
+              AuthUserStreamWidget(
+                builder: (context) => Container(
                   width: double.infinity,
                   height: double.infinity,
-                  savedScore:
-                      valueOrDefault(currentUserDocument?.module2Game2Score, 0),
-                  onGameComplete: () async {
-                    await currentUserReference!.update(createUsersRecordData(
-                      module2Game2Score: 100,
-                    ));
-                  },
-                  onNextGame: () async {
-                    context.pushNamed(CrosswordGameMod2Widget.routeName);
-                  },
-                  onGoHome: () async {
-                    context.pushNamed(HomePageWidget.routeName);
-                  },
-                  onBackToMenu: () async {
-                    context.pushNamed(GameIntroMod2Widget.routeName);
-                  },
+                  child: custom_widgets.WitchHunter(
+                    width: double.infinity,
+                    height: double.infinity,
+                    savedScore: valueOrDefault(
+                        currentUserDocument?.module2Game2Score, 0),
+                    onGameComplete: () async {
+                      await currentUserReference!.update(createUsersRecordData(
+                        module2Game2Score: 100,
+                      ));
+                    },
+                    onNextGame: () async {
+                      context.pushNamed(CrosswordGameMod2Widget.routeName);
+                    },
+                    onGoHome: () async {
+                      context.pushNamed(HomePageWidget.routeName);
+                    },
+                    onBackToMenu: () async {
+                      context.pushNamed(GameIntroMod2Widget.routeName);
+                    },
+                  ),
                 ),
               ),
-            ),
-            AuthUserStreamWidget(
-              builder: (context) => Container(
-                width: 1.0,
-                height: 1.0,
-                child: custom_widgets.SessionMonitor(
+              AuthUserStreamWidget(
+                builder: (context) => Container(
                   width: 1.0,
                   height: 1.0,
-                  sessionCode:
-                      valueOrDefault(currentUserDocument?.sessionCode, ''),
-                  onSessionEnded: () async {
-                    context.goNamed(SessionEndedPageWidget.routeName);
-                  },
+                  child: custom_widgets.SessionMonitor(
+                    width: 1.0,
+                    height: 1.0,
+                    sessionCode:
+                        valueOrDefault(currentUserDocument?.sessionCode, ''),
+                    onSessionEnded: () async {
+                      context.goNamed(SessionEndedPageWidget.routeName);
+                    },
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

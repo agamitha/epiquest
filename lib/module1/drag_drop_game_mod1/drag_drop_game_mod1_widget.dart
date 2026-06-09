@@ -49,51 +49,54 @@ class _DragDropGameMod1WidgetState extends State<DragDropGameMod1Widget> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        body: Stack(
-          children: [
-            AuthUserStreamWidget(
-              builder: (context) => Container(
-                width: double.infinity,
-                height: double.infinity,
-                child: custom_widgets.DragDrop(
+        body: SafeArea(
+          top: true,
+          child: Stack(
+            children: [
+              AuthUserStreamWidget(
+                builder: (context) => Container(
                   width: double.infinity,
                   height: double.infinity,
-                  savedScore:
-                      valueOrDefault(currentUserDocument?.module1Game4Score, 0),
-                  onGameComplete: (scorePercent) async {
-                    await currentUserReference!.update(createUsersRecordData(
-                      module1Game4Score: scorePercent,
-                    ));
-                  },
-                  onNextGame: () async {
-                    context.pushNamed(GameCompletionMod1Widget.routeName);
-                  },
-                  onGoHome: () async {
-                    context.pushNamed(HomePageWidget.routeName);
-                  },
-                  onBackToMenu: () async {
-                    context.pushNamed(GameIntroMod1Widget.routeName);
-                  },
-                  onReviewContent: () async {},
+                  child: custom_widgets.DragDrop(
+                    width: double.infinity,
+                    height: double.infinity,
+                    savedScore: valueOrDefault(
+                        currentUserDocument?.module1Game4Score, 0),
+                    onGameComplete: (scorePercent) async {
+                      await currentUserReference!.update(createUsersRecordData(
+                        module1Game4Score: scorePercent,
+                      ));
+                    },
+                    onNextGame: () async {
+                      context.pushNamed(GameCompletionMod1Widget.routeName);
+                    },
+                    onGoHome: () async {
+                      context.pushNamed(HomePageWidget.routeName);
+                    },
+                    onBackToMenu: () async {
+                      context.pushNamed(GameIntroMod1Widget.routeName);
+                    },
+                    onReviewContent: () async {},
+                  ),
                 ),
               ),
-            ),
-            AuthUserStreamWidget(
-              builder: (context) => Container(
-                width: 1.0,
-                height: 1.0,
-                child: custom_widgets.SessionMonitor(
+              AuthUserStreamWidget(
+                builder: (context) => Container(
                   width: 1.0,
                   height: 1.0,
-                  sessionCode:
-                      valueOrDefault(currentUserDocument?.sessionCode, ''),
-                  onSessionEnded: () async {
-                    context.goNamed(SessionEndedPageWidget.routeName);
-                  },
+                  child: custom_widgets.SessionMonitor(
+                    width: 1.0,
+                    height: 1.0,
+                    sessionCode:
+                        valueOrDefault(currentUserDocument?.sessionCode, ''),
+                    onSessionEnded: () async {
+                      context.goNamed(SessionEndedPageWidget.routeName);
+                    },
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

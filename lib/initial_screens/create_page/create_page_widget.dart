@@ -45,21 +45,24 @@ class _CreatePageWidgetState extends State<CreatePageWidget> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.white,
-        body: Container(
-          width: double.infinity,
-          height: double.infinity,
-          child: custom_widgets.CreateAccountPage(
+        body: SafeArea(
+          top: true,
+          child: Container(
             width: double.infinity,
             height: double.infinity,
-            onCreateSuccess: () async {
-              if (Navigator.of(context).canPop()) {
-                context.pop();
-              }
-              context.pushNamed(LoginPageWidget.routeName);
-            },
-            onGoToLogin: () async {
-              context.pushNamed(LoginPageWidget.routeName);
-            },
+            child: custom_widgets.CreateAccountPage(
+              width: double.infinity,
+              height: double.infinity,
+              onCreateSuccess: () async {
+                if (Navigator.of(context).canPop()) {
+                  context.pop();
+                }
+                context.pushNamed(LoginPageWidget.routeName);
+              },
+              onGoToLogin: () async {
+                context.pushNamed(LoginPageWidget.routeName);
+              },
+            ),
           ),
         ),
       ),

@@ -58,60 +58,63 @@ class _GameIntroMod1WidgetState extends State<GameIntroMod1Widget> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        body: Stack(
-          children: [
-            AuthUserStreamWidget(
-              builder: (context) => Container(
-                width: double.infinity,
-                height: double.infinity,
-                child: custom_widgets.GameIntroMod1(
+        body: SafeArea(
+          top: true,
+          child: Stack(
+            children: [
+              AuthUserStreamWidget(
+                builder: (context) => Container(
                   width: double.infinity,
                   height: double.infinity,
-                  game1Score:
-                      valueOrDefault(currentUserDocument?.module1Game1Score, 0),
-                  game2Score:
-                      valueOrDefault(currentUserDocument?.module1Game2Score, 0),
-                  game3Score:
-                      valueOrDefault(currentUserDocument?.module1Game3Score, 0),
-                  game4Score:
-                      valueOrDefault(currentUserDocument?.module1Game4Score, 0),
-                  onPlayGame1: () async {
-                    context.pushNamed(SaveThePrincessMod1Widget.routeName);
-                  },
-                  onPlayGame2: () async {
-                    context.pushNamed(CrosswordGameMod1Widget.routeName);
-                  },
-                  onPlayGame3: () async {
-                    context.pushNamed(WordFinderMod1Widget.routeName);
-                  },
-                  onPlayGame4: () async {
-                    context.pushNamed(DragDropGameMod1Widget.routeName);
-                  },
-                  onViewResults: () async {
-                    context.pushNamed(GameCompletionMod1Widget.routeName);
-                  },
-                  onGoHome: () async {
-                    context.pushNamed(HomePageWidget.routeName);
-                  },
+                  child: custom_widgets.GameIntroMod1(
+                    width: double.infinity,
+                    height: double.infinity,
+                    game1Score: valueOrDefault(
+                        currentUserDocument?.module1Game1Score, 0),
+                    game2Score: valueOrDefault(
+                        currentUserDocument?.module1Game2Score, 0),
+                    game3Score: valueOrDefault(
+                        currentUserDocument?.module1Game3Score, 0),
+                    game4Score: valueOrDefault(
+                        currentUserDocument?.module1Game4Score, 0),
+                    onPlayGame1: () async {
+                      context.pushNamed(SaveThePrincessMod1Widget.routeName);
+                    },
+                    onPlayGame2: () async {
+                      context.pushNamed(CrosswordGameMod1Widget.routeName);
+                    },
+                    onPlayGame3: () async {
+                      context.pushNamed(WordFinderMod1Widget.routeName);
+                    },
+                    onPlayGame4: () async {
+                      context.pushNamed(DragDropGameMod1Widget.routeName);
+                    },
+                    onViewResults: () async {
+                      context.pushNamed(GameCompletionMod1Widget.routeName);
+                    },
+                    onGoHome: () async {
+                      context.pushNamed(HomePageWidget.routeName);
+                    },
+                  ),
                 ),
               ),
-            ),
-            AuthUserStreamWidget(
-              builder: (context) => Container(
-                width: 1.0,
-                height: 1.0,
-                child: custom_widgets.SessionMonitor(
+              AuthUserStreamWidget(
+                builder: (context) => Container(
                   width: 1.0,
                   height: 1.0,
-                  sessionCode:
-                      valueOrDefault(currentUserDocument?.sessionCode, ''),
-                  onSessionEnded: () async {
-                    context.goNamed(SessionEndedPageWidget.routeName);
-                  },
+                  child: custom_widgets.SessionMonitor(
+                    width: 1.0,
+                    height: 1.0,
+                    sessionCode:
+                        valueOrDefault(currentUserDocument?.sessionCode, ''),
+                    onSessionEnded: () async {
+                      context.goNamed(SessionEndedPageWidget.routeName);
+                    },
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

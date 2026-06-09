@@ -47,38 +47,41 @@ class _Mod2LessonsWidgetState extends State<Mod2LessonsWidget> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        body: Stack(
-          children: [
-            Container(
-              width: double.infinity,
-              height: double.infinity,
-              child: custom_widgets.Module2Lessons(
+        body: SafeArea(
+          top: true,
+          child: Stack(
+            children: [
+              Container(
                 width: double.infinity,
                 height: double.infinity,
-                onDone: () async {
-                  context.pushNamed(GameIntroMod2Widget.routeName);
-                },
-                onBack: () async {
-                  context.pushNamed(HomePageWidget.routeName);
-                },
-              ),
-            ),
-            AuthUserStreamWidget(
-              builder: (context) => Container(
-                width: 1.0,
-                height: 1.0,
-                child: custom_widgets.SessionMonitor(
-                  width: 1.0,
-                  height: 1.0,
-                  sessionCode:
-                      valueOrDefault(currentUserDocument?.sessionCode, ''),
-                  onSessionEnded: () async {
-                    context.goNamed(SessionEndedPageWidget.routeName);
+                child: custom_widgets.Module2Lessons(
+                  width: double.infinity,
+                  height: double.infinity,
+                  onDone: () async {
+                    context.pushNamed(GameIntroMod2Widget.routeName);
+                  },
+                  onBack: () async {
+                    context.pushNamed(HomePageWidget.routeName);
                   },
                 ),
               ),
-            ),
-          ],
+              AuthUserStreamWidget(
+                builder: (context) => Container(
+                  width: 1.0,
+                  height: 1.0,
+                  child: custom_widgets.SessionMonitor(
+                    width: 1.0,
+                    height: 1.0,
+                    sessionCode:
+                        valueOrDefault(currentUserDocument?.sessionCode, ''),
+                    onSessionEnded: () async {
+                      context.goNamed(SessionEndedPageWidget.routeName);
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

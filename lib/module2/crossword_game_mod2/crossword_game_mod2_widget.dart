@@ -49,50 +49,53 @@ class _CrosswordGameMod2WidgetState extends State<CrosswordGameMod2Widget> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        body: Stack(
-          children: [
-            AuthUserStreamWidget(
-              builder: (context) => Container(
-                width: double.infinity,
-                height: double.infinity,
-                child: custom_widgets.CrosswordGridMod2(
+        body: SafeArea(
+          top: true,
+          child: Stack(
+            children: [
+              AuthUserStreamWidget(
+                builder: (context) => Container(
                   width: double.infinity,
                   height: double.infinity,
-                  savedScore:
-                      valueOrDefault(currentUserDocument?.module2Game3Score, 0),
-                  onGameComplete: (scorePercent) async {
-                    await currentUserReference!.update(createUsersRecordData(
-                      module2Game3Score: scorePercent,
-                    ));
-                  },
-                  onNextGame: () async {
-                    context.pushNamed(SaveTheGoldfishMod2Widget.routeName);
-                  },
-                  onGoHome: () async {
-                    context.pushNamed(HomePageWidget.routeName);
-                  },
-                  onBackToMenu: () async {
-                    context.pushNamed(GameIntroMod2Widget.routeName);
-                  },
+                  child: custom_widgets.CrosswordGridMod2(
+                    width: double.infinity,
+                    height: double.infinity,
+                    savedScore: valueOrDefault(
+                        currentUserDocument?.module2Game3Score, 0),
+                    onGameComplete: (scorePercent) async {
+                      await currentUserReference!.update(createUsersRecordData(
+                        module2Game3Score: scorePercent,
+                      ));
+                    },
+                    onNextGame: () async {
+                      context.pushNamed(SaveTheGoldfishMod2Widget.routeName);
+                    },
+                    onGoHome: () async {
+                      context.pushNamed(HomePageWidget.routeName);
+                    },
+                    onBackToMenu: () async {
+                      context.pushNamed(GameIntroMod2Widget.routeName);
+                    },
+                  ),
                 ),
               ),
-            ),
-            AuthUserStreamWidget(
-              builder: (context) => Container(
-                width: 1.0,
-                height: 1.0,
-                child: custom_widgets.SessionMonitor(
+              AuthUserStreamWidget(
+                builder: (context) => Container(
                   width: 1.0,
                   height: 1.0,
-                  sessionCode:
-                      valueOrDefault(currentUserDocument?.sessionCode, ''),
-                  onSessionEnded: () async {
-                    context.goNamed(SessionEndedPageWidget.routeName);
-                  },
+                  child: custom_widgets.SessionMonitor(
+                    width: 1.0,
+                    height: 1.0,
+                    sessionCode:
+                        valueOrDefault(currentUserDocument?.sessionCode, ''),
+                    onSessionEnded: () async {
+                      context.goNamed(SessionEndedPageWidget.routeName);
+                    },
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

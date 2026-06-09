@@ -48,43 +48,46 @@ class _FirewaterbalanceWidgetState extends State<FirewaterbalanceWidget> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        body: Stack(
-          children: [
-            Container(
-              width: double.infinity,
-              height: 800.0,
-              child: custom_widgets.FireWaterBalance(
+        body: SafeArea(
+          top: true,
+          child: Stack(
+            children: [
+              Container(
                 width: double.infinity,
                 height: 800.0,
-                onGameComplete: () async {
-                  await currentUserReference!.update(createUsersRecordData(
-                    module2Completed: true,
-                  ));
-                },
-                onGoHome: () async {
-                  context.pushNamed(HomePageWidget.routeName);
-                },
-                onBackToHome: () async {
-                  context.pushNamed(HomePageWidget.routeName);
-                },
-              ),
-            ),
-            AuthUserStreamWidget(
-              builder: (context) => Container(
-                width: 1.0,
-                height: 1.0,
-                child: custom_widgets.SessionMonitor(
-                  width: 1.0,
-                  height: 1.0,
-                  sessionCode:
-                      valueOrDefault(currentUserDocument?.sessionCode, ''),
-                  onSessionEnded: () async {
-                    context.goNamed(SessionEndedPageWidget.routeName);
+                child: custom_widgets.FireWaterBalance(
+                  width: double.infinity,
+                  height: 800.0,
+                  onGameComplete: () async {
+                    await currentUserReference!.update(createUsersRecordData(
+                      module2Completed: true,
+                    ));
+                  },
+                  onGoHome: () async {
+                    context.pushNamed(HomePageWidget.routeName);
+                  },
+                  onBackToHome: () async {
+                    context.pushNamed(HomePageWidget.routeName);
                   },
                 ),
               ),
-            ),
-          ],
+              AuthUserStreamWidget(
+                builder: (context) => Container(
+                  width: 1.0,
+                  height: 1.0,
+                  child: custom_widgets.SessionMonitor(
+                    width: 1.0,
+                    height: 1.0,
+                    sessionCode:
+                        valueOrDefault(currentUserDocument?.sessionCode, ''),
+                    onSessionEnded: () async {
+                      context.goNamed(SessionEndedPageWidget.routeName);
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

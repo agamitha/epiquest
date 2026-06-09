@@ -48,53 +48,57 @@ class _WordFinderMod1WidgetState extends State<WordFinderMod1Widget> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        body: Stack(
-          children: [
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(2.0, 0.0, 2.0, 0.0),
-              child: AuthUserStreamWidget(
-                builder: (context) => Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  child: custom_widgets.WordFinder(
+        body: SafeArea(
+          top: true,
+          child: Stack(
+            children: [
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(2.0, 0.0, 2.0, 0.0),
+                child: AuthUserStreamWidget(
+                  builder: (context) => Container(
                     width: double.infinity,
                     height: double.infinity,
-                    savedScore: valueOrDefault(
-                        currentUserDocument?.module1Game3Score, 0),
-                    onGameComplete: (scorePercent) async {
-                      await currentUserReference!.update(createUsersRecordData(
-                        module1Game3Score: scorePercent,
-                      ));
-                    },
-                    onNextGame: () async {
-                      context.pushNamed(DragDropGameMod1Widget.routeName);
-                    },
-                    onGoHome: () async {
-                      context.pushNamed(HomePageWidget.routeName);
-                    },
-                    onBackToMenu: () async {
-                      context.pushNamed(GameIntroMod1Widget.routeName);
+                    child: custom_widgets.WordFinder(
+                      width: double.infinity,
+                      height: double.infinity,
+                      savedScore: valueOrDefault(
+                          currentUserDocument?.module1Game3Score, 0),
+                      onGameComplete: (scorePercent) async {
+                        await currentUserReference!
+                            .update(createUsersRecordData(
+                          module1Game3Score: scorePercent,
+                        ));
+                      },
+                      onNextGame: () async {
+                        context.pushNamed(DragDropGameMod1Widget.routeName);
+                      },
+                      onGoHome: () async {
+                        context.pushNamed(HomePageWidget.routeName);
+                      },
+                      onBackToMenu: () async {
+                        context.pushNamed(GameIntroMod1Widget.routeName);
+                      },
+                    ),
+                  ),
+                ),
+              ),
+              AuthUserStreamWidget(
+                builder: (context) => Container(
+                  width: 1.0,
+                  height: 1.0,
+                  child: custom_widgets.SessionMonitor(
+                    width: 1.0,
+                    height: 1.0,
+                    sessionCode:
+                        valueOrDefault(currentUserDocument?.sessionCode, ''),
+                    onSessionEnded: () async {
+                      context.goNamed(SessionEndedPageWidget.routeName);
                     },
                   ),
                 ),
               ),
-            ),
-            AuthUserStreamWidget(
-              builder: (context) => Container(
-                width: 1.0,
-                height: 1.0,
-                child: custom_widgets.SessionMonitor(
-                  width: 1.0,
-                  height: 1.0,
-                  sessionCode:
-                      valueOrDefault(currentUserDocument?.sessionCode, ''),
-                  onSessionEnded: () async {
-                    context.goNamed(SessionEndedPageWidget.routeName);
-                  },
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

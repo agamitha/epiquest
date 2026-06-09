@@ -59,49 +59,52 @@ class _GameCompletionMod1WidgetState extends State<GameCompletionMod1Widget> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        body: Stack(
-          children: [
-            AuthUserStreamWidget(
-              builder: (context) => Container(
-                width: double.infinity,
-                height: double.infinity,
-                child: custom_widgets.GameCompletionMod1(
+        body: SafeArea(
+          top: true,
+          child: Stack(
+            children: [
+              AuthUserStreamWidget(
+                builder: (context) => Container(
                   width: double.infinity,
                   height: double.infinity,
-                  game1Score:
-                      valueOrDefault(currentUserDocument?.module1Game1Score, 0),
-                  game2Score:
-                      valueOrDefault(currentUserDocument?.module1Game2Score, 0),
-                  game3Score:
-                      valueOrDefault(currentUserDocument?.module1Game3Score, 0),
-                  game4Score:
-                      valueOrDefault(currentUserDocument?.module1Game4Score, 0),
-                  onBackToHome: () async {
-                    await currentUserReference!.update(createUsersRecordData(
-                      module1Completed: true,
-                    ));
+                  child: custom_widgets.GameCompletionMod1(
+                    width: double.infinity,
+                    height: double.infinity,
+                    game1Score: valueOrDefault(
+                        currentUserDocument?.module1Game1Score, 0),
+                    game2Score: valueOrDefault(
+                        currentUserDocument?.module1Game2Score, 0),
+                    game3Score: valueOrDefault(
+                        currentUserDocument?.module1Game3Score, 0),
+                    game4Score: valueOrDefault(
+                        currentUserDocument?.module1Game4Score, 0),
+                    onBackToHome: () async {
+                      await currentUserReference!.update(createUsersRecordData(
+                        module1Completed: true,
+                      ));
 
-                    context.pushNamed(HomePageWidget.routeName);
-                  },
+                      context.pushNamed(HomePageWidget.routeName);
+                    },
+                  ),
                 ),
               ),
-            ),
-            AuthUserStreamWidget(
-              builder: (context) => Container(
-                width: 1.0,
-                height: 1.0,
-                child: custom_widgets.SessionMonitor(
+              AuthUserStreamWidget(
+                builder: (context) => Container(
                   width: 1.0,
                   height: 1.0,
-                  sessionCode:
-                      valueOrDefault(currentUserDocument?.sessionCode, ''),
-                  onSessionEnded: () async {
-                    context.goNamed(SessionEndedPageWidget.routeName);
-                  },
+                  child: custom_widgets.SessionMonitor(
+                    width: 1.0,
+                    height: 1.0,
+                    sessionCode:
+                        valueOrDefault(currentUserDocument?.sessionCode, ''),
+                    onSessionEnded: () async {
+                      context.goNamed(SessionEndedPageWidget.routeName);
+                    },
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

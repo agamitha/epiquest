@@ -98,75 +98,80 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           child: Scaffold(
             key: scaffoldKey,
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-            body: Stack(
-              children: [
-                AuthUserStreamWidget(
-                  builder: (context) => Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    child: custom_widgets.HomePage(
+            body: SafeArea(
+              top: true,
+              child: Stack(
+                children: [
+                  AuthUserStreamWidget(
+                    builder: (context) => Container(
                       width: double.infinity,
                       height: double.infinity,
-                      displayName: currentUserDisplayName,
-                      module1LessonDone: homePageUsersRecord?.module1LessonDone,
-                      module1Completed: homePageUsersRecord?.module1Completed,
-                      module2LessonDone: homePageUsersRecord?.module2LessonDone,
-                      module2Completed: homePageUsersRecord?.module2Completed,
-                      module1AvgScore: valueOrDefault(
-                          currentUserDocument?.module1AvgScore, 0),
-                      module1Game1Score: valueOrDefault(
-                          currentUserDocument?.module1Game1Score, 0),
-                      module1Game2Score: valueOrDefault(
-                          currentUserDocument?.module1Game2Score, 0),
-                      module1Game3Score: valueOrDefault(
-                          currentUserDocument?.module1Game3Score, 0),
-                      module1Game4Score: valueOrDefault(
-                          currentUserDocument?.module1Game4Score, 0),
-                      onGoToMod1Lesson: () async {
-                        context.pushNamed(Mod1LessonsWidget.routeName);
-                      },
-                      onGoToMod1Games: () async {
-                        context.pushNamed(GameIntroMod1Widget.routeName);
-                      },
-                      onGoToMod2Lesson: () async {
-                        context.pushNamed(Mod2LessonsWidget.routeName);
-                      },
-                      onGoToMod2Games: () async {
-                        context.pushNamed(GameIntroMod2Widget.routeName);
-                      },
-                      onGoToFinalGame: () async {
-                        context.pushNamed(FirewaterbalanceWidget.routeName);
-                      },
-                      onLogout: () async {
-                        GoRouter.of(context).prepareAuthEvent();
-                        await authManager.signOut();
-                        GoRouter.of(context).clearRedirectLocation();
+                      child: custom_widgets.HomePage(
+                        width: double.infinity,
+                        height: double.infinity,
+                        displayName: currentUserDisplayName,
+                        module1LessonDone:
+                            homePageUsersRecord?.module1LessonDone,
+                        module1Completed: homePageUsersRecord?.module1Completed,
+                        module2LessonDone:
+                            homePageUsersRecord?.module2LessonDone,
+                        module2Completed: homePageUsersRecord?.module2Completed,
+                        module1AvgScore: valueOrDefault(
+                            currentUserDocument?.module1AvgScore, 0),
+                        module1Game1Score: valueOrDefault(
+                            currentUserDocument?.module1Game1Score, 0),
+                        module1Game2Score: valueOrDefault(
+                            currentUserDocument?.module1Game2Score, 0),
+                        module1Game3Score: valueOrDefault(
+                            currentUserDocument?.module1Game3Score, 0),
+                        module1Game4Score: valueOrDefault(
+                            currentUserDocument?.module1Game4Score, 0),
+                        onGoToMod1Lesson: () async {
+                          context.pushNamed(Mod1LessonsWidget.routeName);
+                        },
+                        onGoToMod1Games: () async {
+                          context.pushNamed(GameIntroMod1Widget.routeName);
+                        },
+                        onGoToMod2Lesson: () async {
+                          context.pushNamed(Mod2LessonsWidget.routeName);
+                        },
+                        onGoToMod2Games: () async {
+                          context.pushNamed(GameIntroMod2Widget.routeName);
+                        },
+                        onGoToFinalGame: () async {
+                          context.pushNamed(FirewaterbalanceWidget.routeName);
+                        },
+                        onLogout: () async {
+                          GoRouter.of(context).prepareAuthEvent();
+                          await authManager.signOut();
+                          GoRouter.of(context).clearRedirectLocation();
 
-                        if (Navigator.of(context).canPop()) {
-                          context.pop();
-                        }
-                        context.pushNamedAuth(
-                            LoginPageWidget.routeName, context.mounted);
-                      },
+                          if (Navigator.of(context).canPop()) {
+                            context.pop();
+                          }
+                          context.pushNamedAuth(
+                              LoginPageWidget.routeName, context.mounted);
+                        },
+                      ),
                     ),
                   ),
-                ),
-                AuthUserStreamWidget(
-                  builder: (context) => Container(
-                    width: 1.0,
-                    height: 1.0,
-                    child: custom_widgets.SessionMonitor(
+                  AuthUserStreamWidget(
+                    builder: (context) => Container(
                       width: 1.0,
                       height: 1.0,
-                      sessionCode:
-                          valueOrDefault(currentUserDocument?.sessionCode, ''),
-                      onSessionEnded: () async {
-                        context.goNamed(SessionEndedPageWidget.routeName);
-                      },
+                      child: custom_widgets.SessionMonitor(
+                        width: 1.0,
+                        height: 1.0,
+                        sessionCode: valueOrDefault(
+                            currentUserDocument?.sessionCode, ''),
+                        onSessionEnded: () async {
+                          context.goNamed(SessionEndedPageWidget.routeName);
+                        },
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );

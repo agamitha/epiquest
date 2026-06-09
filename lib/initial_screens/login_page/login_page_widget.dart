@@ -45,27 +45,30 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: Colors.white,
-        body: Container(
-          width: double.infinity,
-          height: double.infinity,
-          child: custom_widgets.SignInPage(
+        body: SafeArea(
+          top: true,
+          child: Container(
             width: double.infinity,
             height: double.infinity,
-            onLoginSuccess: () async {
-              if (Navigator.of(context).canPop()) {
-                context.pop();
-              }
-              context.pushNamed(HomePageWidget.routeName);
-            },
-            onGoToSignUp: () async {
-              context.pushNamed(CreatePageWidget.routeName);
-            },
-            onAdminLoginSuccess: () async {
-              if (Navigator.of(context).canPop()) {
-                context.pop();
-              }
-              context.pushNamed(AdminPanelWidget.routeName);
-            },
+            child: custom_widgets.SignInPage(
+              width: double.infinity,
+              height: double.infinity,
+              onLoginSuccess: () async {
+                if (Navigator.of(context).canPop()) {
+                  context.pop();
+                }
+                context.pushNamed(HomePageWidget.routeName);
+              },
+              onGoToSignUp: () async {
+                context.pushNamed(CreatePageWidget.routeName);
+              },
+              onAdminLoginSuccess: () async {
+                if (Navigator.of(context).canPop()) {
+                  context.pop();
+                }
+                context.pushNamed(AdminPanelWidget.routeName);
+              },
+            ),
           ),
         ),
       ),

@@ -49,59 +49,62 @@ class _GameCompletionMod2WidgetState extends State<GameCompletionMod2Widget> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        body: Stack(
-          children: [
-            AuthUserStreamWidget(
-              builder: (context) => InkWell(
-                splashColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                onTap: () async {
-                  await currentUserReference!.update(createUsersRecordData(
-                    email: '',
-                  ));
-                },
-                child: Container(
-                  width: double.infinity,
-                  height: 800.0,
-                  child: custom_widgets.GameCompletionMod2(
+        body: SafeArea(
+          top: true,
+          child: Stack(
+            children: [
+              AuthUserStreamWidget(
+                builder: (context) => InkWell(
+                  splashColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: () async {
+                    await currentUserReference!.update(createUsersRecordData(
+                      email: '',
+                    ));
+                  },
+                  child: Container(
                     width: double.infinity,
                     height: 800.0,
-                    game1Score: valueOrDefault(
-                        currentUserDocument?.module2Game1Score, 0),
-                    game2Score: valueOrDefault(
-                        currentUserDocument?.module2Game2Score, 0),
-                    game3Score: valueOrDefault(
-                        currentUserDocument?.module2Game3Score, 0),
-                    game4Score: valueOrDefault(
-                        currentUserDocument?.module2Game4Score, 0),
-                    onBackToHome: () async {
-                      context.pushNamed(HomePageWidget.routeName);
-                    },
-                    onPlayFinalGame: () async {
-                      context.pushNamed(FirewaterbalanceWidget.routeName);
+                    child: custom_widgets.GameCompletionMod2(
+                      width: double.infinity,
+                      height: 800.0,
+                      game1Score: valueOrDefault(
+                          currentUserDocument?.module2Game1Score, 0),
+                      game2Score: valueOrDefault(
+                          currentUserDocument?.module2Game2Score, 0),
+                      game3Score: valueOrDefault(
+                          currentUserDocument?.module2Game3Score, 0),
+                      game4Score: valueOrDefault(
+                          currentUserDocument?.module2Game4Score, 0),
+                      onBackToHome: () async {
+                        context.pushNamed(HomePageWidget.routeName);
+                      },
+                      onPlayFinalGame: () async {
+                        context.pushNamed(FirewaterbalanceWidget.routeName);
+                      },
+                    ),
+                  ),
+                ),
+              ),
+              AuthUserStreamWidget(
+                builder: (context) => Container(
+                  width: 1.0,
+                  height: 1.0,
+                  child: custom_widgets.SessionMonitor(
+                    width: 1.0,
+                    height: 1.0,
+                    sessionCode:
+                        valueOrDefault(currentUserDocument?.sessionCode, ''),
+                    onSessionEnded: () async {
+                      context.goNamed(SessionEndedPageWidget.routeName);
                     },
                   ),
                 ),
               ),
-            ),
-            AuthUserStreamWidget(
-              builder: (context) => Container(
-                width: 1.0,
-                height: 1.0,
-                child: custom_widgets.SessionMonitor(
-                  width: 1.0,
-                  height: 1.0,
-                  sessionCode:
-                      valueOrDefault(currentUserDocument?.sessionCode, ''),
-                  onSessionEnded: () async {
-                    context.goNamed(SessionEndedPageWidget.routeName);
-                  },
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
