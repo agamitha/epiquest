@@ -3,7 +3,7 @@
 Last updated: June 1, 2026
 
 EpiQuest is a research-based educational learning game 
-developed by agamitha.ai for academic research purposes.
+developed by agamitha.ai.
 
 ## Information We Collect
 - Session codes for authentication
